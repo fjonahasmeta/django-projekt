@@ -1,0 +1,176 @@
+{% extends 'agency/base.html' %}
+
+{% block content %}
+
+<style>
+
+.detail-card {
+    max-width: 900px;
+    margin: auto;
+}
+
+.hero-img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 16px 16px 0 0;
+}
+
+.content-box {
+    background: #161A22;
+    padding: 25px;
+    border-radius: 0 0 16px 16px;
+    border: 1px solid rgba(201,168,76,0.15);
+}
+
+.title {
+    color: #E8E6E0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.meta {
+    color: #8A8680;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+.text {
+    color: #E8E6E0;
+    line-height: 1.6;
+}
+
+.actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-like {
+    background: #1f7a3a;
+    color: white;
+    border-radius: 25px;
+    padding: 6px 14px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.btn-dislike {
+    background: #b3261e;
+    color: white;
+    border-radius: 25px;
+    padding: 6px 14px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.btn-book {
+    background: #C9A84C;
+    color: #0D0D0D;
+    border-radius: 25px;
+    padding: 6px 14px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.section-title {
+    margin-top: 35px;
+    font-size: 20px;
+    color: #C9A84C;
+    font-weight: 600;
+}
+
+.review-card {
+    background: #161A22;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.star {
+    color: gold;
+}
+
+input, textarea, select {
+    background: #111318 !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+</style>
+
+<div class="detail-card mt-4">
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" class="hero-img">
+    {% endif %}
+
+    <div class="content-box">
+
+        <div class="title">{{ post.title }}</div>
+
+        <div class="meta">
+            ✍ {{ post.author }} • 📅 {{ post.created_at|date:"d M Y" }}
+        </div>
+
+        <div class="text">
+            {{ post.content }}
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'like' post.id %}" class="btn-like">
+                ❤️ Like {{ post.likes }}
+            </a>
+
+            <a href="{% url 'dislike' post.id %}" class="btn-dislike">
+                👎 Dislike {{ post.dislikes }}
+            </a>
+
+            <a href="{% url 'booking' post.id %}" class="btn-book">
+                📩 Book Now
+            </a>
+        </div>
+
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="section-title">⭐ Reviews</div>
+
+    {% for review in reviews %}
+        <div class="review-card">
+            <b>{{ review.name }}</b>
+
+            <div>
+                {% for i in "12345" %}
+                    {% if forloop.counter <= review.rating %}
+                        <span class="star">★</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <p>{{ review.comment }}</p>
+        </div>
+    {% empty %}
+        <p style="color:#8A8680;">No reviews yet</p>
+    {% endfor %}
+
+    <!-- FORM -->
+    <div class="review-card">
+        <h5 style="color:#C9A84C;">Add Review</h5>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn-book" style="border:none; margin-top:10px;">
+                Submit Review
+            </button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

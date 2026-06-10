@@ -1,0 +1,139 @@
+{% extends 'agency/base.html' %}
+
+{% block content %}
+
+<style>
+
+.booking-wrapper {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.booking-card {
+    width: 100%;
+    max-width: 520px;
+    background: linear-gradient(145deg, #161A22, #111318);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    animation: fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.booking-title {
+    font-size: 1.8rem;
+    color: #E8E6E0;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+.booking-sub {
+    font-size: 0.9rem;
+    color: #8A8680;
+    margin-bottom: 1.8rem;
+}
+
+.highlight {
+    color: #C9A84C;
+}
+
+label {
+    font-size: 0.75rem;
+    color: #8A8680;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+    display: block;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    background: #0D0D0D;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #E8E6E0;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #C9A84C;
+    box-shadow: 0 0 0 2px rgba(201,168,76,0.15);
+}
+
+.btn-book {
+    width: 100%;
+    padding: 12px;
+    background: #C9A84C;
+    color: #0D0D0D;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-book:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    color: #8A8680;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    color: #C9A84C;
+}
+
+</style>
+
+<div class="booking-wrapper">
+
+    <div class="booking-card">
+
+        <div class="booking-title">
+            Book Your <span class="highlight">Trip</span> ✈️
+        </div>
+
+        <div class="booking-sub">
+            Complete the form below to confirm your reservation
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn-book">
+                Confirm Booking
+            </button>
+        </form>
+
+        <a href="{% url 'home' %}" class="back-link">
+            ← Back to Home
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

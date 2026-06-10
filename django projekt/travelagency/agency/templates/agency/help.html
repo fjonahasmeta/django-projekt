@@ -1,0 +1,100 @@
+{% extends 'agency/base.html' %}
+
+{% block content %}
+
+<style>
+.help-hero {
+    text-align: center;
+    padding: 60px 20px 20px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(15px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.help-hero h1 {
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.help-hero p {
+    color: #8A8680;
+}
+
+.help-card {
+    background: #161A22;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 16px;
+    padding: 25px;
+    transition: 0.3s;
+}
+
+.help-card:hover {
+    transform: translateY(-6px);
+    border-color: #C9A84C;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.form-control {
+    background: #111318 !important;
+    border: 1px solid rgba(201,168,76,0.2) !important;
+    color: #E8E6E0 !important;
+    border-radius: 10px !important;
+}
+
+.form-control:focus {
+    border-color: #C9A84C !important;
+    box-shadow: none !important;
+}
+
+label {
+    color: #8A8680;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+</style>
+
+<div class="help-hero">
+    <h1>📩 Na Kontakto</h1>
+    <p>Na dërgo mesazh dhe ekipi ynë do të të përgjigjet sa më shpejt</p>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="help-card">
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label>Emri</label>
+                        <input type="text" name="name" class="form-control" placeholder="Shkruaj emrin">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" placeholder="Shkruaj email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Mesazhi</label>
+                        <textarea name="message" rows="5" class="form-control" placeholder="Shkruaj mesazhin..."></textarea>
+                    </div>
+
+                    <button class="btn btn-warning w-100">Dërgo Mesazhin</button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
